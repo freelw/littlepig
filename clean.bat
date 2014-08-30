@@ -6,4 +6,6 @@ del getcircleinfo.m
 del getcloudinfo.m
 del showlinestinfo.m
 del showcost.m
+del showcostx.txt
+del showcosty.txt
 del *.pyc

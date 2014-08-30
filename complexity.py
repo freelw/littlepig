@@ -260,11 +260,16 @@ def simulate(flightsinfo, sector_info):
 
         dis12 =  dis(pl1, pl2)
         tmp = fdiv(separation, dis12)
-        if tmp > 1:
-            tmp = 1
-        elif tmp < -1:
-            tmp = -1
-        #confirm abs(tmp) <= 1
+           
+        def asin(tmp):
+            if tmp > 1:
+                tmp = 1
+            elif tmp < -1:
+                tmp = -1
+            return math.asin(tmp)
+            #confirm abs(tmp) <= 1
+        tmp = asin(tmp)
+        
         tmp = math.asin(tmp)
         alpha = gama + tmp
         beta = gama - tmp
