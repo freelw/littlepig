@@ -1,0 +1,9 @@
+del getsectorx.m
+del getsectory.m
+del getroutebegin.m
+del getrouteend.m
+del getcircleinfo.m
+del getcloudinfo.m
+del showlinestinfo.m
+del showcost.m
+del *.pyc

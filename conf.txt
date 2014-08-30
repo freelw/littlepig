@@ -1,0 +1,50 @@
+{
+    "sector": [
+        {"y": 48, "x": -64},
+        {"y": 56, "x": 56}, 
+        {"y": 16, "x": 72}, 
+        {"y": -54, "x": 58}, 
+        {"y": -56, "x": -32}, 
+        {"y": -12, "x": -75}
+    ], 
+    "circle": {
+        "circleR": 80,
+        "circley": 0, 
+        "circlex": 0
+    }, 
+    "lines": {
+        "begin": [1, 6],
+        "end": [4, 3]
+    },
+    "cloud": {
+        "speedx": 0,
+        "speedy": 0,
+        "cloudR": 10,
+        "cloudy": 0,
+        "cloudx": 0
+    },
+    "flightstream":{
+        "time":{
+            "f":0,
+            "t":3600,
+            "t1":7200
+        },
+        "flighttypes":[
+            {
+                "vf":360,
+                "vt":450
+            },
+            {
+                "vf":360,
+                "vt":470
+            },
+            {
+                "vf":360,
+                "vt":504
+            }
+        ],
+        "flightnum":15,
+        "retry":100000,
+        "separation":5
+    }
+}

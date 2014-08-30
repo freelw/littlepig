@@ -1,0 +1,2 @@
+del flightinfocache
+del flightsinfo
