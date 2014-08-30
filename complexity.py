@@ -269,8 +269,6 @@ def simulate(flightsinfo, sector_info):
             return math.asin(tmp)
             #confirm abs(tmp) <= 1
         tmp = asin(tmp)
-        
-        tmp = math.asin(tmp)
         alpha = gama + tmp
         beta = gama - tmp
         return beta < thit < alpha, thit, alpha, beta
