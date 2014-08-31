@@ -31,12 +31,12 @@ def buildstream():
     separation = obj['separation']
     
     #print '%d %d %d' % (f, t, flightnum)  
+    type = getrd(0, typesnum)
+    vf = flighttypes[type]['vf']
+    vt = flighttypes[type]['vt']
     for i in xrange(retry):
         arr = []
-        for j in xrange(flightnum):
-            type = getrd(0, typesnum)
-            vf = flighttypes[type]['vf']
-            vt = flighttypes[type]['vt']
+        for j in xrange(flightnum):            
             arr.append({'time':getrd(tf, tt),'v':getrd(vf, vt), 'type':type})
         def func(a):
             return a['time']

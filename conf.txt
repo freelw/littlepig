@@ -27,7 +27,7 @@
         "time":{
             "f":0,
             "t":3600,
-            "t1":7200
+            "simulate_end_time":7200
         },
         "flighttypes":[
             {

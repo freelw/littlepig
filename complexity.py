@@ -229,7 +229,7 @@ def simulate(flightsinfo, sector_info):
     print flightsinfo
     print sector_info
     fr = sector_info['flightstream']['time']['f']
-    to = sector_info['flightstream']['time']['t1']
+    to = sector_info['flightstream']['time']['simulate_end_time']
     
     pool = []
     
@@ -445,9 +445,9 @@ if '__main__' == __name__:
     sector_info = dataLoader.readinput()
     drawMap(sector_info)
     flightsinfo = drawFlightsInfo(sector_info)
-    initConflictMap(conflictMap, flightsinfo, sector_info['flightstream']['time']['f'], sector_info['flightstream']['time']['t1'])
+    initConflictMap(conflictMap, flightsinfo, sector_info['flightstream']['time']['f'], sector_info['flightstream']['time']['simulate_end_time'])
     simulate(flightsinfo, sector_info)
-    showcost(sector_info['flightstream']['time']['f'], sector_info['flightstream']['time']['t1'], cost_arr)
+    showcost(sector_info['flightstream']['time']['f'], sector_info['flightstream']['time']['simulate_end_time'], cost_arr)
     showflightnumarr(flightnumarr)
     
     for item in conflictMap:
