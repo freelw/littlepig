@@ -8,4 +8,6 @@ del showlinestinfo.m
 del showcost.m
 del showcostx.txt
 del showcosty.txt
+del showflightnumarr.m
+del conflictmsg.txt
 del *.pyc
