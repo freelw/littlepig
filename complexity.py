@@ -124,7 +124,7 @@ def drawFlightsInfo(sector_info):
     return flightsinfo
     
 class plane:
-    def __init__(self, x, y, vx, vy, type, line, index, time):
+    def __init__(self, x, y, vx, vy, type = None, line = None, index = None, time = None):
         self.x = x
         self.y = y
         self.vx = vx
@@ -322,26 +322,54 @@ def simulate(flightsinfo, sector_info):
         conflictmsg.write(msg)
         conflictmsg.close()
         
-        
+    cldconf = sector_info['cloud']
+    cloud = plane(cldconf['cloudx'], cldconf['cloudy'], cldconf['speedx'], cldconf['speedy'])
     for i in xrange(fr, to):
         flightnumarr.append({'t':i, 'num':len(pool)})
         scanComing(i, sector_info, flightsinfo, pool)
         pool, leave = scanLeaving(sector_info, pool, i)
         leaveinfo.append(leave)
         cost_sum = 0
+        def getminind(c):
+            ind = 0
+            cnt = 0
+            for item in c:
+                if item < c[ind]:
+                    ind = cnt
+                cnt += 1
+            return ind
+        #for cloud
+        for j in xrange(len(pool)):
+            if dis(pool[j], cloud) < cldconf['cloudR']:
+                if towards(pool[j], cloud):
+                    bconflict, thit, alpha, beta = conflict(pool[j], cloud, cldconf['cloudR'])
+                    if bconflict:
+                        vjx1, vjy1 = changev(pool[j], cloud, alpha, thit)
+                        vjx2, vjy2 = changev(pool[j], cloud, beta, thit)
+                        cost_inputs = [
+                            [vjx1, vjy1, pool[j], sector_info],
+                            [vjx2, vjy2, pool[j], sector_info]
+                        ]
+                        c = []
+                        for item in cost_inputs:
+                            c.append(cost(item[0], item[1], item[2], item[3]))
+                        ind = getminind(c)
+                        item = cost_inputs[ind]
+                        if not can_not_changev(item[0], item[1], item[2], item[3]):
+                            if 0 == ind or 1 == ind:
+                                #sum cost here
+                                cost_sum += cost(item[0], item[1], item[2], item[3])
+                                pool[j].vx = item[0]
+                                pool[j].vy = item[1]
+        #for cloud end
+        
+        
         for j in xrange(len(pool)):
             for k in xrange(len(pool)):
                 if k > j:
                     if dis(pool[j], pool[k]) < 6*sector_info['flightstream']['separation']:
                         if towards(pool[j], pool[k]):
-                            def getminind(c):
-                                ind = 0
-                                cnt = 0
-                                for item in c:
-                                    if item < c[ind]:
-                                        ind = cnt
-                                    cnt += 1
-                                return ind
+                            
                             if samdir(pool[j], pool[k]):
                                 jkisConflict(pool[j], pool[k], i)
                                 c = []

@@ -43,7 +43,7 @@
                 "vt":504
             }
         ],
-        "flightnum":15,
+        "flightnum":10,
         "retry":100000,
         "separation":5
     }
