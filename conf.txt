@@ -45,6 +45,8 @@
         ],
         "flightnum":10,
         "retry":100000,
-        "separation":35
+        "separation":5,
+        "clearance":18.9,
+        "bVsame":false
     }
 }

@@ -1,14 +1,17 @@
 import random
 import dataLoader
 
-def judge(arr, separation):
+def judge(arr, separation, clearance):
     def transkm(s):#nm 2 km
         return s*1.852
     for i in xrange(len(arr)-1):
         timehour = (arr[i+1]['time'] - arr[i]['time'])*1./3600
         timemin = (arr[i+1]['time'] - arr[i]['time'])*1./60
-        if separation > timehour * transkm(arr[i]['v']):
+        if separation > timehour * arr[i]['v']:
             return False
+        if clearance > timehour * arr[i]['v']:
+            return False
+            
         def feql(a, b):
             return abs(a-b) < 1e-7
         #if feql(arr[i]['v'], arr[i+1]['v']) and timemin < 10:
@@ -29,7 +32,8 @@ def buildstream():
     flightnum = obj['flightnum']
     retry = obj['retry']
     separation = obj['separation']
-    
+    clearance = obj['clearance']
+    bVsame = obj['bVsame']
     #print '%d %d %d' % (f, t, flightnum)  
     type = getrd(0, typesnum)
     vf = flighttypes[type]['vf']
@@ -37,14 +41,16 @@ def buildstream():
     v = getrd(vf, vt)
     for i in xrange(retry):
         arr = []
-        for j in xrange(flightnum):            
+        for j in xrange(flightnum):
+            if not bVsame:
+                v = getrd(vf, vt)
             arr.append({'time':getrd(tf, tt), 'v':v, 'type':type})
         def func(a):
             return a['time']
         arr.sort(key=func)
         for j in xrange(len(arr)):
             arr[j]['index'] = j
-        if judge(arr, separation):
+        if judge(arr, separation, clearance):
             print 'buildstream ok'
             return arr
         print 'retry ', i+1, ' time'
