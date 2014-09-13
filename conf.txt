@@ -17,11 +17,11 @@
         "end": [4, 3]
     },
     "cloud": {
-        "speedx": 0,
-        "speedy": 0,
-        "cloudR": 10,
-        "cloudy": 0,
-        "cloudx": 0
+        "speedx": 18,
+        "speedy": 18,
+        "cloudR": 5,
+        "cloudy": -56,
+        "cloudx": -32
     },
     "flightstream":{
         "time":{
