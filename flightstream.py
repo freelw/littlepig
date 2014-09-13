@@ -7,16 +7,16 @@ def judge(arr, separation):
     for i in xrange(len(arr)-1):
         timehour = (arr[i+1]['time'] - arr[i]['time'])*1./3600
         timemin = (arr[i+1]['time'] - arr[i]['time'])*1./60
-        if separation > timehour * arr[i]['v']:
+        if separation > timehour * transkm(arr[i]['v']):
             return False
         def feql(a, b):
             return abs(a-b) < 1e-7
-        if feql(arr[i]['v'], arr[i+1]['v']) and timemin < 10:
-            return False
-        if transkm(arr[i]['v']) - 40 > transkm(arr[i+1]['v']) and timemin < 5:
-            return False
-        if transkm(arr[i]['v']) - 80 > transkm(arr[i+1]['v']) and timemin < 3:
-            return False
+        #if feql(arr[i]['v'], arr[i+1]['v']) and timemin < 10:
+        #    return False
+        #if transkm(arr[i]['v']) - 40 > transkm(arr[i+1]['v']) and timemin < 5:
+        #    return False
+        #if transkm(arr[i]['v']) - 80 > transkm(arr[i+1]['v']) and timemin < 3:
+        #    return False
     return True
     
 def buildstream():
@@ -34,10 +34,11 @@ def buildstream():
     type = getrd(0, typesnum)
     vf = flighttypes[type]['vf']
     vt = flighttypes[type]['vt']
+    v = getrd(vf, vt)
     for i in xrange(retry):
         arr = []
         for j in xrange(flightnum):            
-            arr.append({'time':getrd(tf, tt),'v':getrd(vf, vt), 'type':type})
+            arr.append({'time':getrd(tf, tt), 'v':v, 'type':type})
         def func(a):
             return a['time']
         arr.sort(key=func)

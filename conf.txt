@@ -45,6 +45,6 @@
         ],
         "flightnum":10,
         "retry":100000,
-        "separation":5
+        "separation":35
     }
 }
