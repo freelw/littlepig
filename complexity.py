@@ -480,3 +480,22 @@ if '__main__' == __name__:
     
     for item in conflictMap:
         print item['index'], ' ', len(item['arr'])
+
+    sum = {'all':0}
+    cnt = {'all':0}
+    print 'line|time|leavetime'
+    for item in leaveinfo:
+        for pl in item:
+            print '%s|%s|%s' % (pl.line, pl.time, pl.leaveTime)
+            dert = pl.leaveTime - pl.time
+            sum['all'] += dert
+            cnt['all'] += 1
+            if sum.get(pl.line, None) is None:
+                sum[pl.line] = dert
+                cnt[pl.line] = 1
+            else:
+                sum[pl.line] += dert
+                cnt[pl.line] += 1
+    print 'line|planeCnt|aveTime'
+    for key in sum:
+        print '%s|%s|%s' % (key, cnt[key], sum[key]*1./cnt[key])
