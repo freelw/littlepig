@@ -4,6 +4,7 @@ import json
 import math
 import copy
 import os
+import sys
 
 class point:
     def __init__(x, y):
@@ -59,7 +60,7 @@ def drawMap(sector_info):
     else:
         init_m(sector_info)
 
-def drawFlightsInfo(sector_info):
+def drawFlightsInfo(sector_info, varr):
 
     def getCache():
         try:
@@ -88,7 +89,7 @@ def drawFlightsInfo(sector_info):
         fflightsinfo = open('flightsinfo', 'w')
         fflightsinfo.write(json.dumps(flightsinfo))
         fflightsinfo.close()
-    def getDrawCmd():
+    def getDrawCmd(varr):
         ret, flightsinfo = getCache()
         if ret is not None:
             return ret, flightsinfo
@@ -97,8 +98,9 @@ def drawFlightsInfo(sector_info):
         colors = ['b', 'm', 'c', 'r', 'g', 'y', 'w', 'k']
         colornum = len(colors)
         flightsinfo = []
+        print varr
         for i in xrange(linenum):
-            arr = flightstream.buildstream()
+            arr = flightstream.buildstream(varr[i])
             flightsinfo.append(arr)
             x = [str(item['time']) for item in arr]
             y = [str(item['v']) for item in arr]
@@ -114,7 +116,7 @@ def drawFlightsInfo(sector_info):
             
     funcname = 'showlinestinfo'
     content = 'function %s\n' % funcname
-    drawCmd, flightsinfo = getDrawCmd()
+    drawCmd, flightsinfo = getDrawCmd(varr)
     content += drawCmd
     content += 'end\n'
     
@@ -471,8 +473,14 @@ if '__main__' == __name__:
     leaveinfo = []
     conflictMap = []
     sector_info = dataLoader.readinput()
+    if len(sys.argv) >= 2:
+        varr = [int(x) for x in sys.argv[1].split(';')]
+        bIsBat = True
+    else:
+        varr = [None for i in xrange(len(sector_info['lines']['begin']))]
+        bIsBat = False
     drawMap(sector_info)
-    flightsinfo = drawFlightsInfo(sector_info)
+    flightsinfo = drawFlightsInfo(sector_info, varr)
     initConflictMap(conflictMap, flightsinfo, sector_info['flightstream']['time']['f'], sector_info['flightstream']['time']['simulate_end_time'])
     simulate(flightsinfo, sector_info)
     showcost(sector_info['flightstream']['time']['f'], sector_info['flightstream']['time']['simulate_end_time'], cost_arr)
@@ -503,3 +511,17 @@ if '__main__' == __name__:
         print msg
         aveTime.write(msg + '\n')
     aveTime.close()
+    
+    total_cost_sum = reduce(lambda a, b : a+b, cost_arr)
+    print 'total_cost_sum : %s' % total_cost_sum
+    fr = sector_info['flightstream']['time']['f']
+    to = sector_info['flightstream']['time']['simulate_end_time']
+    ave_cost = total_cost_sum / (to - fr)
+    print 'ave_cost : %s' % ave_cost
+    
+    if bIsBat:
+        vstr = ' '.join(['%s' % item for item in varr])
+        msg = '%s %s\n' % (vstr, ave_cost)
+        batOutput = open('./output/batOutput.txt', 'a')
+        batOutput.write(msg)
+        batOutput.close()

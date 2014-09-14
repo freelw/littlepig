@@ -48,6 +48,6 @@
         "separation":5,
         "clearance":18.9,
         "bVsame":true,
-        "bBindClearance":false
+        "bBindClearance":true
     }
 }

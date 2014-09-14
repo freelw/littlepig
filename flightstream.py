@@ -22,7 +22,7 @@ def judge(arr, separation, clearance):
         #    return False
     return True
     
-def buildstream():
+def buildstream(v = None):
     
     obj = getfsObj()
     tf = obj['time']['f']
@@ -39,7 +39,8 @@ def buildstream():
     type = getrd(0, typesnum)
     vf = flighttypes[type]['vf']
     vt = flighttypes[type]['vt']
-    v = getrd(vf, vt)
+    if v is None:
+        v = getrd(vf, vt)
     baseTime = tf + getrd(0, clearance/v)
     
     for i in xrange(retry):
