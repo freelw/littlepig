@@ -33,18 +33,24 @@ def buildstream():
     retry = obj['retry']
     separation = obj['separation']
     clearance = obj['clearance']
+    bBindClearance = obj['bBindClearance']
     bVsame = obj['bVsame']
     #print '%d %d %d' % (f, t, flightnum)  
     type = getrd(0, typesnum)
     vf = flighttypes[type]['vf']
     vt = flighttypes[type]['vt']
     v = getrd(vf, vt)
+    baseTime = tf + getrd(0, clearance/v)
+    
     for i in xrange(retry):
         arr = []
         for j in xrange(flightnum):
-            if not bVsame:
-                v = getrd(vf, vt)
-            arr.append({'time':getrd(tf, tt), 'v':v, 'type':type})
+            if bBindClearance:
+                arr.append({'time':baseTime + j*(clearance+1)/v*3600, 'v':v, 'type':type})
+            else:
+                if not bVsame:
+                    v = getrd(vf, vt)
+                arr.append({'time':getrd(tf, tt), 'v':v, 'type':type})
         def func(a):
             return a['time']
         arr.sort(key=func)

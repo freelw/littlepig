@@ -47,6 +47,7 @@
         "retry":100000,
         "separation":5,
         "clearance":18.9,
-        "bVsame":false
+        "bVsame":true,
+        "bBindClearance":false
     }
 }
