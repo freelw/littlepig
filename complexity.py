@@ -497,5 +497,9 @@ if '__main__' == __name__:
                 sum[pl.line] += dert
                 cnt[pl.line] += 1
     print 'line|planeCnt|aveTime'
+    aveTime = open('aveTime.txt', 'w')
     for key in sum:
-        print '%s|%s|%s' % (key, cnt[key], sum[key]*1./cnt[key])
+        msg = '%s|%s|%s' % (key, cnt[key], sum[key]*1./cnt[key])
+        print msg
+        aveTime.write(msg + '\n')
+    aveTime.close()
