@@ -31,8 +31,9 @@ if '__main__' == __name__:
     for line in open('batOutput.txt'):
         x, y, z = line.split()
         msg += '\tz(%s, %s) = %s\n' % (cntdx[x], cntdy[y], z)
-    msg += '\tmesh(x, y, z)\n'
-
+    msg += '\t[xi, yi] = meshgrid(350:0.5:510, 350:0.5:510)\n'
+    msg += "\tzi = interp2(x, y, z, xi, yi, 'linear')\n"
+    msg += '\tmesh(xi, yi, zi)\n'
     msg +='end'
     draw.write(msg)
     draw.close()
