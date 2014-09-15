@@ -843,7 +843,7 @@ function drawplane
 	z(29, 27) = 0.0439509013048
 	z(29, 28) = 0.0272572001472
 	z(29, 29) = 0.0125085458896
-	[xi, yi] = meshgrid(350:0.5:510, 350:0.5:510)
+	[xi, yi] = meshgrid(350:0.01:510, 350:0.01:510)
 	zi = interp2(x, y, z, xi, yi, 'linear')
 	mesh(xi, yi, zi)
 end
