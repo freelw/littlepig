@@ -1,5 +1,5 @@
 function littlepig
-    subplot(1, 3, 1)
+    figure(1)
     hold on
     x = getsectorx
     y = getsectory
@@ -15,12 +15,12 @@ function littlepig
     axis equal    
     hold off
     
-    subplot(1, 3, 2)
+    figure(2)
     hold on
     showflightnumarr
     hold off
-    
-    subplot(1, 3, 3)
+
+    figure(3)
     hold on
     showcost
     hold off
