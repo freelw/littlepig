@@ -41,7 +41,7 @@ def buildstream(v = None):
     vt = flighttypes[type]['vt']
     if v is None:
         v = getrd(vf, vt)
-    baseTime = tf + getrd(0, clearance/v)
+    baseTime = tf + getrd(0, int(clearance*1./v*3600))
     
     for i in xrange(retry):
         arr = []
