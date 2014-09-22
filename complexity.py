@@ -369,7 +369,7 @@ def simulate(flightsinfo, sector_info):
         for j in xrange(len(pool)):
             for k in xrange(len(pool)):
                 if k > j:
-                    if dis(pool[j], pool[k]) < 6*sector_info['flightstream']['separation']:
+                    if dis(pool[j], pool[k]) <= 6*sector_info['flightstream']['separation']:
                         if towards(pool[j], pool[k]):
                             
                             if samdir(pool[j], pool[k]):
