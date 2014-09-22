@@ -25,6 +25,7 @@ if '__main__' == __name__:
     
     msg = 'function drawplane\n'
     draw = open('drawplane.m', 'w')
+    msg += '\tfigure(1)\n'
     msg += '\tx = [%s]\n' % ', '.join(xarr)
     msg += '\ty = [%s]\n' % ', '.join(yarr)
     msg += '\tz = zeros(%s, %s)\n' % (len(xarr), len(yarr))
@@ -33,7 +34,11 @@ if '__main__' == __name__:
         msg += '\tz(%s, %s) = %s\n' % (cntdx[x], cntdy[y], z)
     msg += '\t[xi, yi] = meshgrid(350:0.3:510, 350:0.3:510)\n'
     msg += "\tzi = interp2(x, y, z, xi, yi, 'linear')\n"
+    
     msg += '\tmesh(xi, yi, zi)\n'
+    msg += '\tfigure(2)\n'
+    msg += '\t[C,h] = contour(xi, yi, zi)\n'
+    msg += '\tclabel(C,h)\n'
     msg +='end'
     draw.write(msg)
     draw.close()
