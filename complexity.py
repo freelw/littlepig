@@ -342,7 +342,7 @@ def simulate(flightsinfo, sector_info):
             return ind
         #for cloud
         for j in xrange(len(pool)):
-            if dis(pool[j], cloud) < cldconf['cloudR']:
+            if dis(pool[j], cloud) <= cldconf['cloudR']*6:
                 if towards(pool[j], cloud):
                     bconflict, thit, alpha, beta = conflict(pool[j], cloud, cldconf['cloudR'])
                     if bconflict:
