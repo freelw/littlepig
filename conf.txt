@@ -19,7 +19,7 @@
     "cloud": {
         "speedx": 18,
         "speedy": 18,
-        "cloudR": 5,
+        "cloudR": 10.8,
         "cloudy": 0,
         "cloudx": 0
     },
