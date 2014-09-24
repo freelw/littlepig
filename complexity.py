@@ -303,6 +303,15 @@ def simulate(flightsinfo, sector_info):
         u2x, u2y = unit_v(pl2.vx, pl2.vy)
         return feql(u1x, u2x) and feql(u1y, u2y)
     
+    def cantSolveConflict(time_point, plj, plk = None):
+        f = open('cantSolveConflict.txt', 'a')
+        if plk is None:
+            msg = 'at %s plane %s_%s can\'t avoid cloud' % (time_point, plj.line, plj.index)
+        else:
+            msg = 'at %s plane %s_%s can\'t avoid plane %s_%s' % (time_point, plj.line, plj.index, plk.line, plk.index)
+        f.write(msg+'\n')
+        f.close()
+    
     
     global flightnumarr
     global leaveinfo
@@ -363,6 +372,8 @@ def simulate(flightsinfo, sector_info):
                                 cost_sum += abs(cost(item[0], item[1], item[2], item[3]))
                                 pool[j].vx = item[0]
                                 pool[j].vy = item[1]
+                        else:
+                            cantSolveConflict(i, pool[j])
         #for cloud end
         
         
@@ -399,6 +410,7 @@ def simulate(flightsinfo, sector_info):
                                         jkisConflict(pool[j], pool[k], i, value, 'samedir')
                                 else:
                                     jkisConflict(pool[j], pool[k], i, None)
+                                    cantSolveConflict(i, pool[j], pool[k])
                             else:
                                 bconflict, thit, alpha, beta = conflict(pool[j], pool[k], sector_info['flightstream']['separation'])
                                 if bconflict: 
@@ -437,6 +449,7 @@ def simulate(flightsinfo, sector_info):
                                             jkisConflict(pool[k], pool[j], i, value, 'diffdir')
                                     else:
                                         jkisConflict(pool[k], pool[j], i, None)
+                                        cantSolveConflict(i, pool[j], pool[k])
         global cost_arr
         cost_arr.append(cost_sum)
         move(pool)

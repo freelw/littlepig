@@ -20,8 +20,8 @@
         "speedx": 18,
         "speedy": 18,
         "cloudR": 5,
-        "cloudy": -56,
-        "cloudx": -32
+        "cloudy": 0,
+        "cloudx": 0
     },
     "flightstream":{
         "time":{

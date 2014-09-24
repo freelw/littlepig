@@ -11,4 +11,5 @@ del showcosty.txt
 del showflightnumarr.m
 del conflictmsg.txt
 del aveTime.txt
+del cantSolveConflict.txt
 del *.pyc
