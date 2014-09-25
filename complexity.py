@@ -366,10 +366,9 @@ def simulate(flightsinfo, sector_info):
                             c.append(abs(cost(item[0], item[1], item[2], item[3])))
                         ind = getminind(c)
                         item = cost_inputs[ind]
+                        cost_sum += abs(cost(item[0], item[1], item[2], item[3]))
                         if not can_not_changev(item[0], item[1], item[2], item[3]):
                             if 0 == ind or 1 == ind:
-                                #sum cost here
-                                cost_sum += abs(cost(item[0], item[1], item[2], item[3]))
                                 pool[j].vx = item[0]
                                 pool[j].vy = item[1]
                         else:
@@ -392,19 +391,14 @@ def simulate(flightsinfo, sector_info):
                                     c.append(abs(cost(item[0], item[1], item[2], item[3])))
                                 ind = getminind(c)
                                 item = cost_inputs[ind]
-                                value = 0
+                                value = cost(item[0], item[1], item[2], item[3])
+                                cost_sum += abs(value)
                                 if not can_not_changev(item[0], item[1], item[2], item[3]):
                                     if 0 == ind:
-                                        #sum cost here
-                                        value = cost(item[0], item[1], item[2], item[3])
-                                        cost_sum += abs(value)
                                         pool[k].vx = item[0]
                                         pool[k].vy = item[1]
                                         jkisConflict(pool[k], pool[j], i, value, 'samedir')
                                     elif 1 == ind:
-                                        #sum cost here
-                                        value = cost(item[0], item[1], item[2], item[3])
-                                        cost_sum += abs(value)
                                         pool[j].vx = item[0]
                                         pool[j].vy = item[1]
                                         jkisConflict(pool[j], pool[k], i, value, 'samedir')
@@ -430,20 +424,15 @@ def simulate(flightsinfo, sector_info):
                                         c.append(abs(cost(item[0], item[1], item[2], item[3])))
                                     ind = getminind(c)
                                     item = cost_inputs[ind]
-                                    value = 0
+                                    
+                                    value = cost(item[0], item[1], item[2], item[3])
+                                    cost_sum += abs(value)
                                     if not can_not_changev(item[0], item[1], item[2], item[3]):
                                         if 0 == ind or 1 == ind:
-                                            #sum cost here
-                                            value = cost(item[0], item[1], item[2], item[3])
-                                            cost_sum += abs(value)
                                             pool[j].vx = item[0]
                                             pool[j].vy = item[1]
                                             jkisConflict(pool[j], pool[k], i, value, 'diffdir')
-                                            
                                         elif 2 == ind or 3 == ind:
-                                            #sum cost here
-                                            value = cost(item[0], item[1], item[2], item[3])
-                                            cost_sum += abs(value)
                                             pool[k].vx = item[0]
                                             pool[k].vy = item[1]
                                             jkisConflict(pool[k], pool[j], i, value, 'diffdir')
