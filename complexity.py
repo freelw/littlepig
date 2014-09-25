@@ -289,8 +289,8 @@ def simulate(flightsinfo, sector_info):
         return v < vf or v > vt
 
     def cost(vx, vy, pl, sector_info):
-        if can_not_changev(vx, vy, pl, sector_info):
-            return 1e11
+        #if can_not_changev(vx, vy, pl, sector_info):
+        #    return 1e11
         v = math.sqrt(vx**2 + vy**2)
         curv = math.sqrt(pl.vx**2 + pl.vy**2)
         return curv - v
