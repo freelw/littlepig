@@ -91,5 +91,5 @@ if '__main__' == __name__:
     topE = buildE(top, sector)
     bottomE = buildE(bottom, sector)
 
-    clds = clouds.get()
+#    clds = clouds.get()
     
