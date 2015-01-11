@@ -102,10 +102,15 @@ def floyed(ways):
                 if i != j and ways[i][j] > ways[i][k] + ways[k][j]:
                     ways[i][j] = ways[i][k] + ways[k][j]
 
+def printclouds(clds):
+    print '-------------clouds-------------'
+    for index, cld in enumerate(clds):
+        print 'index : %s x : %s y %s R : %s' % (index, cld.x, cld.y, cld.R)
+    print '/------------clouds------------/'
+
 if '__main__' == __name__:
     conf = json.loads(readfile('../conf.txt'))
     sector = conf['sector']
-    print sector
 
     top = [[1,2], [2,3]]
     bottom = [[6,5], [5,4]]
@@ -119,8 +124,6 @@ if '__main__' == __name__:
     for index, cld in enumerate(clds):
         tpd = topE.dis(cld) - cld.R
         btd = bottomE.dis(cld) - cld.R
-        print tpd
-        print btd
         ways[0][index+1] = tpd
         ways[index+1][0] = tpd
         ways[N][index+1] = btd
@@ -135,4 +138,6 @@ if '__main__' == __name__:
                 ways[j+1][i+1] = dis
     #printways(ways)
     floyed(ways)
-    printways(ways)
+    #printways(ways)
+    printclouds(clds)
+    print 'capacity is %s' % ways[0][N]
