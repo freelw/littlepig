@@ -2,7 +2,9 @@
 
 
 class cloud:
-    def __init__(self):
-        pass
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
 def get():
-    return []
+    return [cloud(-20, 20)]

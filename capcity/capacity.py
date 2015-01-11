@@ -66,7 +66,8 @@ class Edges:
 
     def dis(self, cld):
         ret = 1e10
-        p = Point(cld.x, cld.y)
+        item = {'x':cld.x, 'y':cld.y}
+        p = Point(item)
         for e in self.edges:
             dis = e.dis(p) 
             if ret > dis:
@@ -93,5 +94,8 @@ if '__main__' == __name__:
     topE = buildE(top, sector)
     bottomE = buildE(bottom, sector)
 
-#    clds = clouds.get()
+    clds = clouds.get()
+    for cld in clds:
+        print topE.dis(cld)
+        print bottomE.dis(cld)
     
