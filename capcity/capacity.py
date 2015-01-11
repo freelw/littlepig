@@ -15,7 +15,7 @@ class Point:
         self.x = item['x']
         self.y = item['y']
     def dis(self, p):
-        return Math.sqrt((self.x-p.x)^2+(self.y-p.y)^2)
+        return Math.sqrt((self.x-p.x)**2+(self.y-p.y)**2)
 
 class vec:
     def __init__(self):
@@ -23,15 +23,17 @@ class vec:
     def setpoint(self, p1, p2):
         self.x = p2.x - p1.x
         self.y = p2.y - p1.y
+        return self
     def setxy(self, x, y):
         self.x = x
         self.y = y
+        return self
     def cross(self, v):
         return self.x*v.x + self.y*v.y;
     def mutNum(self, n):
         return vec().setxy(n*self.x, n*self.y)
     def length(self):
-        return math.sqrt(self.x^2+self.y^2)
+        return math.sqrt(self.x**2+self.y**2)
     def minus(self, v):
         return vec().setxy(self.x-v.x, self.y-v.y)
         
@@ -44,7 +46,7 @@ class Edge:
         p1p = vec().setpoint(self.p1, p)
         p1p2 = vec().setpoint(self.p1, self.p2)
         absp1p2 = p1p2.length()
-        r = p1p.corss(p1p2)/(absp1p2^2)
+        r = p1p.cross(p1p2)/(absp1p2**2)
         if r < 0:
             return p1p.length()
         elif r < 1:
