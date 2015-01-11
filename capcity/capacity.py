@@ -18,7 +18,7 @@ class Point:
         self.x = item['x']
         self.y = item['y']
     def dis(self, p):
-        return Math.sqrt((self.x-p.x)**2+(self.y-p.y)**2)
+        return math.sqrt((self.x-p.x)**2+(self.y-p.y)**2)
 
 class vec:
     def __init__(self):
@@ -133,6 +133,6 @@ if '__main__' == __name__:
                 dis = max(pi.dis(pj), 0)
                 ways[i+1][j+1] = dis
                 ways[j+1][i+1] = dis
-    printways(ways)
+    #printways(ways)
     floyed(ways)
     printways(ways)
