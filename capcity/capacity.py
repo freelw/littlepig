@@ -86,6 +86,22 @@ def buildE(arr, sector):
         ret.append(e)
     return ret
 
+def printways(ways):
+    N = len(ways)-1
+    print '--------------ways---------------'
+    for i in xrange(N+1):
+        for j in xrange(N+1):
+            print '%s %s %s' % (i, j, ways[i][j])
+    print '/-------------ways--------------/'
+
+def floyed(ways):
+    N = len(ways)-1
+    for k in xrange(N+1):
+        for i in xrange(N+1):
+            for j in xrange(N+1):
+                if i != j and ways[i][j] > ways[i][k] + ways[k][j]:
+                    ways[i][j] = ways[i][k] + ways[k][j]
+
 if '__main__' == __name__:
     conf = json.loads(readfile('../conf.txt'))
     sector = conf['sector']
@@ -111,9 +127,12 @@ if '__main__' == __name__:
         ways[index+1][N] = btd
     for i, cldi in enumerate(clds):
         for j, cldj in enumerate(clds):
-            if (i != j):
+            if i != j:
                 pi = Point(builditem(cldi.x, cldi.y))
                 pj = Point(builditem(cldj.x, cldj.y))
                 dis = max(pi.dis(pj), 0)
                 ways[i+1][j+1] = dis
                 ways[j+1][i+1] = dis
+    printways(ways)
+    floyed(ways)
+    printways(ways)
