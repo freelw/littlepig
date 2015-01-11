@@ -10,6 +10,9 @@ def readfile(fname):
         content += line
     return content
 
+def builditem(x, y):
+    return {'x':x, 'y':y}
+
 class Point:
     def __init__(self, item):
         self.x = item['x']
@@ -66,7 +69,7 @@ class Edges:
 
     def dis(self, cld):
         ret = 1e10
-        item = {'x':cld.x, 'y':cld.y}
+        item = builditem(cld.x, cld.y)
         p = Point(item)
         for e in self.edges:
             dis = e.dis(p) 
@@ -95,7 +98,22 @@ if '__main__' == __name__:
     bottomE = buildE(bottom, sector)
 
     clds = clouds.get()
-    for cld in clds:
-        print topE.dis(cld)
-        print bottomE.dis(cld)
-    
+    N = len(clds)+1
+    ways = [[1e10 for i in xrange(N+1)] for j in xrange(N+1)]
+    for index, cld in enumerate(clds):
+        tpd = topE.dis(cld) - cld.R
+        btd = bottomE.dis(cld) - cld.R
+        print tpd
+        print btd
+        ways[0][index+1] = tpd
+        ways[index+1][0] = tpd
+        ways[N][index+1] = btd
+        ways[index+1][N] = btd
+    for i, cldi in enumerate(clds):
+        for j, cldj in enumerate(clds):
+            if (i != j):
+                pi = Point(builditem(cldi.x, cldi.y))
+                pj = Point(builditem(cldj.x, cldj.y))
+                dis = max(pi.dis(pj), 0)
+                ways[i+1][j+1] = dis
+                ways[j+1][i+1] = dis
