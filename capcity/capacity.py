@@ -135,8 +135,8 @@ if '__main__' == __name__:
                 N = len(clds)+1
                 ways = [[1e10 for i in xrange(N+1)] for j in xrange(N+1)]
                 for index, cld in enumerate(clds):
-                    tpd = topE.dis(cld) - cld.R
-                    btd = bottomE.dis(cld) - cld.R
+                    tpd = max(topE.dis(cld) - cld.R, 0)
+                    btd = max(bottomE.dis(cld) - cld.R, 0)
                     ways[0][index+1] = tpd
                     ways[index+1][0] = tpd
                     ways[N][index+1] = btd
