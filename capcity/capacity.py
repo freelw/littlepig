@@ -3,6 +3,7 @@
 import json
 import clouds
 import math
+import conf
 
 def readfile(fname):
     content = ''
@@ -118,7 +119,7 @@ if '__main__' == __name__:
     topE = buildE(top, sector)
     bottomE = buildE(bottom, sector)
 
-    per_range = [(0, 10), (10, 20)]
+    per_range = [(0, 100)]
     vr_range = [(0, 100)]
     
     def writeout(msg):
@@ -126,8 +127,8 @@ if '__main__' == __name__:
         fout.write(msg+'\n')
         fout.close()
         
-    retrytimes = 10
-    for i in xrange(retrytimes):
+    retrytimes = conf.pointsnum
+    for round in xrange(retrytimes):
         for peri in per_range:
             for vri in vr_range:
                 #clds, area_percent, vr = clouds.get(0, 10, 0, 10)
@@ -153,7 +154,7 @@ if '__main__' == __name__:
                 floyed(ways)
                 #printways(ways)
                 printclouds(clds)
-                msg = 'capacity : %s, coverage : %s, variance : %s' % (ways[0][N], area_percent, vr)
+                msg = 'index : %s capacity : %s, coverage : %s, variance : %s' % (round, ways[0][N], area_percent, vr)
                 msgout = '%s %s %s' % (ways[0][N], area_percent, vr)
                 print msg
                 writeout(msgout)
