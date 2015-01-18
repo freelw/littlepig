@@ -3,7 +3,7 @@
 import json
 import clouds
 import math
-import conf
+import config
 
 def readfile(fname):
     content = ''
@@ -127,7 +127,7 @@ if '__main__' == __name__:
         fout.write(msg+'\n')
         fout.close()
         
-    retrytimes = conf.pointsnum
+    retrytimes = config.pointsnum
     for round in xrange(retrytimes):
         for peri in per_range:
             for vri in vr_range:
