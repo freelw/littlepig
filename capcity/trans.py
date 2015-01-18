@@ -32,7 +32,7 @@ if '__main__' == __name__:
     for line in open('capacity3ddata.txt'):
         z, x, y = line.split()
         msg += '\tz(%s, %s) = %s\n' % (cntdx[x], cntdy[y], z)
-    msg += '\t[xi, yi] = meshgrid(350:0.3:510, 350:0.3:510)\n'
+    msg += '\t[xi, yi] = meshgrid(0:0.3:100, 0:0.3:100)\n'
     msg += "\tzi = interp2(x, y, z, xi, yi, 'linear')\n"
     
     msg += '\tmesh(xi, yi, zi)\n'
