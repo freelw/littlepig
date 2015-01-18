@@ -118,7 +118,7 @@ if '__main__' == __name__:
     topE = buildE(top, sector)
     bottomE = buildE(bottom, sector)
 
-    clds = clouds.get()
+    clds = clouds.get(0, 10)
     N = len(clds)+1
     ways = [[1e10 for i in xrange(N+1)] for j in xrange(N+1)]
     for index, cld in enumerate(clds):
