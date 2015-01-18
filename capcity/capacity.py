@@ -154,5 +154,6 @@ if '__main__' == __name__:
                 #printways(ways)
                 printclouds(clds)
                 msg = 'capacity : %s, coverage : %s, variance : %s' % (ways[0][N], area_percent, vr)
+                msgout = '%s %s %s' % (ways[0][N], area_percent, vr)
                 print msg
-                writeout(msg + '\n')
+                writeout(msgout)
