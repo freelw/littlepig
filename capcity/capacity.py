@@ -118,26 +118,41 @@ if '__main__' == __name__:
     topE = buildE(top, sector)
     bottomE = buildE(bottom, sector)
 
-    clds, area_percent, vr = clouds.get(0, 10, 0, 10)
-    N = len(clds)+1
-    ways = [[1e10 for i in xrange(N+1)] for j in xrange(N+1)]
-    for index, cld in enumerate(clds):
-        tpd = topE.dis(cld) - cld.R
-        btd = bottomE.dis(cld) - cld.R
-        ways[0][index+1] = tpd
-        ways[index+1][0] = tpd
-        ways[N][index+1] = btd
-        ways[index+1][N] = btd
-    for i, cldi in enumerate(clds):
-        for j, cldj in enumerate(clds):
-            if i != j:
-                pi = Point(builditem(cldi.x, cldi.y))
-                pj = Point(builditem(cldj.x, cldj.y))
-                dis = max(pi.dis(pj), 0)
-                ways[i+1][j+1] = dis
-                ways[j+1][i+1] = dis
-    #printways(ways)
-    floyed(ways)
-    #printways(ways)
-    printclouds(clds)
-    print 'capacity : %s, coverage : %s, variance : %s' % (ways[0][N], area_percent, vr)
+    per_range = [(0, 10), (10, 20)]
+    vr_range = [(0, 100)]
+    
+    def writeout(msg):
+        fout = open('capacity3ddata.txt', 'wa')
+        fout.write(msg+'\n')
+        fout.close()
+        
+    retrytimes = 10
+    for i in xrange(retrytimes):
+        for peri in per_range:
+            for vri in vr_range:
+                #clds, area_percent, vr = clouds.get(0, 10, 0, 10)
+                clds, area_percent, vr = clouds.get(peri[0], peri[1] , vri[0], vri[1])
+                N = len(clds)+1
+                ways = [[1e10 for i in xrange(N+1)] for j in xrange(N+1)]
+                for index, cld in enumerate(clds):
+                    tpd = topE.dis(cld) - cld.R
+                    btd = bottomE.dis(cld) - cld.R
+                    ways[0][index+1] = tpd
+                    ways[index+1][0] = tpd
+                    ways[N][index+1] = btd
+                    ways[index+1][N] = btd
+                for i, cldi in enumerate(clds):
+                    for j, cldj in enumerate(clds):
+                        if i != j:
+                            pi = Point(builditem(cldi.x, cldi.y))
+                            pj = Point(builditem(cldj.x, cldj.y))
+                            dis = max(pi.dis(pj), 0)
+                            ways[i+1][j+1] = dis
+                            ways[j+1][i+1] = dis
+                #printways(ways)
+                floyed(ways)
+                #printways(ways)
+                printclouds(clds)
+                msg = 'capacity : %s, coverage : %s, variance : %s' % (ways[0][N], area_percent, vr)
+                print msg
+                writeout(msg + '\n')
