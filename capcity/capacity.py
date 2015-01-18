@@ -122,7 +122,7 @@ if '__main__' == __name__:
     vr_range = [(0, 100)]
     
     def writeout(msg):
-        fout = open('capacity3ddata.txt', 'wa')
+        fout = open('capacity3ddata.txt', 'a')
         fout.write(msg+'\n')
         fout.close()
         
