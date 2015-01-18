@@ -1,17 +1,17 @@
 
 if '__main__' == __name__:
-    xd = {}
-    yd = {}
+    xarr = []
+    yarr = []
     for line in open('capacity3ddata.txt'):
-        z, x, y, = line.split()
-        xd[x] = True
-        yd[y] = True
-    xarr = [float(item) for item in xd.keys()]
-    yarr = [float(item) for item in yd.keys()]
+        z, x, y = line.split()
+        print x, ' ', y
+        xarr.append(float(x))
+        yarr.append(float(y))
     xarr.sort()
     yarr.sort()
     xarr = [str(item) for item in xarr]
     yarr = [str(item) for item in yarr]
+    print len(xarr), ' ', len(yarr)
     cnt = 0
     cntdx = {}
     for item in xarr:
@@ -33,7 +33,7 @@ if '__main__' == __name__:
         z, x, y = line.split()
         msg += '\tz(%s, %s) = %s\n' % (cntdx[x], cntdy[y], z)
     msg += '\t[xi, yi] = meshgrid(0:0.3:100, 0:0.3:100)\n'
-    msg += "\tzi = interp2(x, y, z, xi, yi, 'linear')\n"
+    msg += "\tzi = griddata(x, y, z, xi, yi, 'linear')\n"
     
     msg += '\tmesh(xi, yi, zi)\n'
     msg += '\tfigure(2)\n'
