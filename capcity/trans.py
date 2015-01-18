@@ -10,7 +10,7 @@ if '__main__' == __name__:
         point['x'] = float(x)
         point['y'] = float(y)
         points.append(point)
-    print points.sort(lambda a, b : int(a['x'] - b['x']))
+    print points.sort(lambda a, b : -1 if a['x'] < b['x'] else 1)
     print points
     
     #xarr.sort()
