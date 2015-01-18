@@ -2,12 +2,19 @@
 
 import json
 import random
+import math
 
 class cloud:
     def __init__(self, x, y, R):
         self.x = x
         self.y = y
         self.R = R
+
+    def isIn(self, x, y):
+        return self.dis(x, y) <= self.R
+
+    def dis(self, x, y):
+        return math.sqrt((x-self.x)**2 + (y-self.y)**2)
 
 def readfile(fname):
     content = ''
@@ -44,35 +51,47 @@ def isInSector(item, sector):
     sum1 = getSum(x, y, sector, True)
     return abs(abs(sum0) - abs(sum1)) < 1e-7
 
-def get(min_variance, max_variance):
+def get(min_areap, max_areap, min_variance, max_variance):
     conf = json.loads(readfile('../conf.txt'))
     sector = conf['sector']
     rtop = 80.
+    rbottom = 1.
     while True:
         ret = []
         for i in xrange(10):
             while True:
                 x = random.randint(-100, 100)
                 y = random.randint(-100, 100)
-                R = random.randint(0, rtop)
+                R = random.randint(int(rbottom), int(rtop))
                 cld = cloud(x, y, R)
                 #print 'building cloud %s' % i
                 if isInSector(cld, sector):
                     break
             ret.append(cld)
-        vr = variance([item.R for item in ret])
-        if min_variance <= vr <= max_variance:
-            print 'variance %s ok.' % vr
-            break
+        area_percent = getAreaPercent(sector, ret)
+        if min_areap <=  area_percent <= max_areap:
+            print 'area %s %% ok' % area_percent
+            vr = variance([item.R for item in ret])
+            if min_variance <= vr <= max_variance:
+                print 'variance %s ok.' % vr
+                break
+            else:
+                if vr > max_variance:
+                    print 'variance %s is bigger then %s rtop=%s, retry.' % (vr, max_variance, rtop)
+                    rtop /= 2
+                    rbottom = min(rbottom*2, rtop)
+                elif vr < min_variance:
+                    rtop *= 2
+                    rbottom /= 2
+                    print 'variance %s is smaller then %s rtop=%s, retry.' % (vr, min_variance, rtop)
         else:
-            if vr > max_variance:
-                print 'variance %s is bigger then %s rtop=%s, retry.' % (vr, max_variance, rtop)
-                rtop /= 2
-            elif vr < min_variance:
+            print 'area %s%% does not reach [%s%%, %s%%]' % (area_percent, min_areap, max_areap)
+            if area_percent < min_areap:
                 rtop *= 2
-                print 'variance %s is smaller then %s rtop=%s, retry.' % (vr, min_variance, rtop)
-                
-            
+                rbottom *= 2
+            elif area_percent > max_areap:
+                rtop /= 2
+                rbottom /= 2
     return ret
 
 def variance(arr):
@@ -81,6 +100,37 @@ def variance(arr):
     arr1 = map(lambda x : (x-ave)**2, arr)
     s = reduce(lambda x, y : x+y, arr1)
     return s*1./len(arr1)
+
+def getTriangleArea(p0, p1, p2):
+    x0 = p1['x']-p0['x']
+    y0 = p1['y']-p0['y']
+    x1 = p2['x']-p0['x']
+    y1 = p2['y']-p0['y']
+    return (x0*y1-x1*y0)/2
+
+def getSectorArea(sector):
+    N = len(sector)
+    for i in xrange(1, N-1):
+        ret += getTriangleArea(sector[0], sector[i], sector[i+1])
+    return ret
+
+def getAreaPercent(sector, clds):
+    N = 10000
+    cnt = 0
+    cnt1 = 0
+    def getrand():
+        return 1.*random.randint(-10000, 10000)/100
+    while cnt < N:
+        x = getrand()
+        y = getrand()
+        if isInSector(cloud(x, y, 0), sector):
+            cnt += 1
+            for cld in clds:
+                if cld.isIn(x, y):
+                    cnt1 += 1
+                    break
+    print cnt1, ' ', cnt
+    return 1.*cnt1/cnt*100
     
 if '__main__' == __name__:
     arr = [1, 2, 3]
