@@ -120,7 +120,7 @@ if '__main__' == __name__:
     bottomE = buildE(bottom, sector)
 
     per_range = [(0, 100)]
-    vr_range = [(0, 100)]
+    vr_range = [(0, 10000000)]
     
     def writeout(msg):
         fout = open('capacity3ddata.txt', 'a')

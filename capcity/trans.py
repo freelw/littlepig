@@ -2,15 +2,21 @@
 if '__main__' == __name__:
     xarr = []
     yarr = []
+    points = []
     for line in open('capacity3ddata.txt'):
-        z, x, y = line.split()
+        y, x, z = line.split()
         print x, ' ', y
-        xarr.append(float(x))
-        yarr.append(float(y))
-    xarr.sort()
-    yarr.sort()
-    xarr = [str(item) for item in xarr]
-    yarr = [str(item) for item in yarr]
+        point = {}
+        point['x'] = float(x)
+        point['y'] = float(y)
+        points.append(point)
+    print points.sort(lambda a, b : int(a['x'] - b['x']))
+    print points
+    
+    #xarr.sort()
+    #yarr.sort()
+    xarr = [str(item['x']) for item in points]
+    yarr = [str(item['y']) for item in points]
     print len(xarr), ' ', len(yarr)
     cnt = 0
     cntdx = {}
@@ -28,7 +34,7 @@ if '__main__' == __name__:
     msg += '\tfigure(1)\n'
     msg += '\tx = [%s]\n' % ', '.join(xarr)
     msg += '\ty = [%s]\n' % ', '.join(yarr)
-    msg += '\tz = zeros(%s, %s)\n' % (len(xarr), len(yarr))
+    """msg += '\tz = zeros(%s, %s)\n' % (len(xarr), len(yarr))
     for line in open('capacity3ddata.txt'):
         z, x, y = line.split()
         msg += '\tz(%s, %s) = %s\n' % (cntdx[x], cntdy[y], z)
@@ -39,7 +45,8 @@ if '__main__' == __name__:
     msg += '\tfigure(2)\n'
     msg += '\t[C,h] = contour(xi, yi, zi)\n'
     msg += '\tclabel(C,h)\n'
-    msg +='end'
+    msg +='end'"""
+    msg += '\tplot(x,y)'
     draw.write(msg)
     draw.close()
     
