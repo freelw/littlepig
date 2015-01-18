@@ -118,7 +118,7 @@ if '__main__' == __name__:
     topE = buildE(top, sector)
     bottomE = buildE(bottom, sector)
 
-    clds = clouds.get(0, 10, 0, 10)
+    clds, area_percent, vr = clouds.get(0, 10, 0, 10)
     N = len(clds)+1
     ways = [[1e10 for i in xrange(N+1)] for j in xrange(N+1)]
     for index, cld in enumerate(clds):
@@ -140,4 +140,4 @@ if '__main__' == __name__:
     floyed(ways)
     #printways(ways)
     printclouds(clds)
-    print 'capacity is %s' % ways[0][N]
+    print 'capacity : %s, coverage : %s, variance : %s' % (ways[0][N], area_percent, vr)

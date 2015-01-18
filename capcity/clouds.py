@@ -92,7 +92,7 @@ def get(min_areap, max_areap, min_variance, max_variance):
             elif area_percent > max_areap:
                 rtop /= 2
                 rbottom /= 2
-    return ret
+    return ret, area_percent, vr
 
 def variance(arr):
     s = reduce(lambda x, y : x+y, arr)
