@@ -22,9 +22,10 @@ def readfile(fname):
         content += line
     return content
 
-def printclouds(clds, cnt):
+def printclouds(clds, percent, cnt):
     fname = 'clouds%s' % cnt
     f = open(fname, 'w')
+    f.write('%s\n' % percent)
     for cld in clds:
         msg = '%s %s %s' % (cld.x, cld.y, cld.R)
         f.write(msg + '\n')
@@ -48,7 +49,7 @@ def get():
         if area_percent > 85:
             return
         print area_percent
-        printclouds(ret, cnt)
+        printclouds(ret, area_percent, cnt)
         cnt += 1
 
 def getAreaPercent(sector, clds):

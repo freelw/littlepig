@@ -20,8 +20,13 @@ def trans():
         name = 'clouds%s' % i
         for line in open(name):
             line = line.strip()
-            x, y, r = line.split()
-            print 'circle(%s, %s, %s, "%s");' % (x, y, r, name)
+            arr = line.split()
+            if 3 == len(arr):
+                x, y, r = arr
+                print 'circle(%s, %s, %s, "%s");' % (x, y, r, name)
+            else:
+                percent = arr[0]
+                print 'plot(xarr, yarr, "%s", %s);' % (name, percent)
 
 if '__main__' == __name__:
     trans()
