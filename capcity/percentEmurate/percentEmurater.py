@@ -39,7 +39,7 @@ def get():
         while True:
             x = random.randint(-100, 100)
             y = random.randint(-100, 100)
-            R = random.randint(25, 40)
+            R = random.randint(10, 15)
             cld = cloud(x, y, R)
             if isInSector(cld, sector):
                 break
