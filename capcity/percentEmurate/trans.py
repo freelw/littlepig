@@ -16,7 +16,7 @@ def trans():
     print sector
     print xarr
     print yarr
-    for i in xrange(9):
+    for i in xrange(56):
         name = 'clouds%s' % i
         for line in open(name):
             line = line.strip()
