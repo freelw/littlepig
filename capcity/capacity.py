@@ -120,7 +120,6 @@ if '__main__' == __name__:
     bottomE = buildE(bottom, sector)
 
     per_range = [(item*10, item*10+1) for item in xrange(1,10)]
-    vr_range = [(0, 10000000)]
     
     def writeout(msg):
         fout = open('capacity3ddata.txt', 'a')
@@ -128,33 +127,35 @@ if '__main__' == __name__:
         fout.close()
         
     retrytimes = config.pointsnum
-    for round in xrange(retrytimes):
-        for peri in per_range:
-            for vri in vr_range:
-                #clds, area_percent, vr = clouds.get(0, 10, 0, 10)
-                clds, area_percent, vr = clouds.get(peri[0], peri[1] , vri[0], vri[1])
-                N = len(clds)+1
-                ways = [[1e10 for i in xrange(N+1)] for j in xrange(N+1)]
-                for index, cld in enumerate(clds):
-                    tpd = max(topE.dis(cld) - cld.R, 0)
-                    btd = max(bottomE.dis(cld) - cld.R, 0)
-                    ways[0][index+1] = tpd
-                    ways[index+1][0] = tpd
-                    ways[N][index+1] = btd
-                    ways[index+1][N] = btd
-                for i, cldi in enumerate(clds):
-                    for j, cldj in enumerate(clds):
-                        if i != j:
-                            pi = Point(builditem(cldi.x, cldi.y))
-                            pj = Point(builditem(cldj.x, cldj.y))
-                            dis = max(pi.dis(pj), 0)
-                            ways[i+1][j+1] = dis
-                            ways[j+1][i+1] = dis
-                #printways(ways)
-                floyed(ways)
-                #printways(ways)
-                printclouds(clds)
-                msg = 'index : %s capacity : %s, coverage : %s, variance : %s' % (round, ways[0][N], area_percent, vr)
-                msgout = '%s %s %s' % (ways[0][N], area_percent, vr)
-                print msg
-                writeout(msgout)
+    for peri in per_range:
+        cpsum = 0
+        for round in xrange(retrytimes):
+            clds, area_percent, vr = clouds.get(peri[0], peri[1])
+            N = len(clds)+1
+            ways = [[1e10 for i in xrange(N+1)] for j in xrange(N+1)]
+            for index, cld in enumerate(clds):
+                tpd = max(topE.dis(cld) - cld.R, 0)
+                btd = max(bottomE.dis(cld) - cld.R, 0)
+                ways[0][index+1] = tpd
+                ways[index+1][0] = tpd
+                ways[N][index+1] = btd
+                ways[index+1][N] = btd
+            for i, cldi in enumerate(clds):
+                for j, cldj in enumerate(clds):
+                    if i != j:
+                        pi = Point(builditem(cldi.x, cldi.y))
+                        pj = Point(builditem(cldj.x, cldj.y))
+                        dis = max(pi.dis(pj), 0)
+                        ways[i+1][j+1] = dis
+                        ways[j+1][i+1] = dis
+            #printways(ways)
+            floyed(ways)
+            #printways(ways)
+            printclouds(clds)
+            cpsum += ways[0][N]
+            print '[%s%%, %s%%] index : %s capacitysum : %s' % (peri[0], peri[1], round, cpsum)
+        capacity = cpsum*1./retrytimes
+        msg = 'capacity : %s, coverage : [%s%%, %s%%]' % (capacity, peri[0], peri[i])
+        msgout = '%s %s' % (capacity, peri[0])
+        print msg
+        writeout(msgout)
