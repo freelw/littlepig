@@ -1,2 +1,2 @@
 #!/usr/bin/env python
-pointsnum = 100
+pointsnum = 1

@@ -119,7 +119,7 @@ if '__main__' == __name__:
     topE = buildE(top, sector)
     bottomE = buildE(bottom, sector)
 
-    per_range = [(0, 100)]
+    per_range = [(item*10, item*10+1) for item in xrange(1,10)]
     vr_range = [(0, 10000000)]
     
     def writeout(msg):
