@@ -34,11 +34,12 @@ def get():
     conf = json.loads(readfile('../../conf.txt'))
     sector = conf['sector']
     ret = []
+    cnt = 0
     while True:
         while True:
             x = random.randint(-100, 100)
             y = random.randint(-100, 100)
-            R = random.randint(10, 20)
+            R = random.randint(25, 40)
             cld = cloud(x, y, R)
             if isInSector(cld, sector):
                 break
@@ -47,7 +48,8 @@ def get():
         if area_percent > 85:
             return
         print area_percent
-        printclouds(ret)
+        printclouds(ret, cnt)
+        cnt += 1
 
 def getAreaPercent(sector, clds):
     N = 10000
