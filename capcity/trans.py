@@ -4,7 +4,7 @@ if '__main__' == __name__:
     yarr = []
     points = []
     for line in open('capacity3ddata.txt'):
-        y, x, z = line.split()
+        y, x = line.split()
         print x, ' ', y
         point = {}
         point['x'] = float(x)
