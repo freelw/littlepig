@@ -58,40 +58,46 @@ def get(min_areap, max_areap, min_variance, max_variance):
     rbottom = 1.
     while True:
         ret = []
-        for i in xrange(10):
-            while True:
-                x = random.randint(-100, 100)
-                y = random.randint(-100, 100)
-                R = random.randint(int(rbottom), int(rtop))
-                cld = cloud(x, y, R)
-                #print 'building cloud %s' % i
-                if isInSector(cld, sector):
-                    break
-            ret.append(cld)
-        area_percent = getAreaPercent(sector, ret)
-        if min_areap <=  area_percent <= max_areap:
-            print 'area %s %% ok' % area_percent
-            vr = variance([item.R for item in ret])
-            if min_variance <= vr <= max_variance:
-                print 'variance %s ok.' % vr
+        while True:
+            x = random.randint(-100, 100)
+            y = random.randint(-100, 100)
+            R = random.randint(int(rbottom), int(rtop))
+            cld = cloud(x, y, R)
+            #print 'building cloud %s' % i
+            if isInSector(cld, sector):
                 break
-            else:
-                if vr > max_variance:
-                    print 'variance %s is bigger then %s rtop=%s, retry.' % (vr, max_variance, rtop)
-                    rtop /= 2
-                    rbottom = min(rbottom*2, rtop)
-                elif vr < min_variance:
-                    rtop *= 2
-                    rbottom /= 2
-                    print 'variance %s is smaller then %s rtop=%s, retry.' % (vr, min_variance, rtop)
-        else:
-            print 'area %s%% does not reach [%s%%, %s%%]' % (area_percent, min_areap, max_areap)
-            if area_percent < min_areap:
-                rtop *= 2
-                rbottom *= 2
-            elif area_percent > max_areap:
-                rtop /= 2
-                rbottom /= 2
+        ret.append(cld)
+        area_percent = getAreaPercent(sector, ret)
+        if area_percent > max_areap:
+            print '%s%% is not good for [%s%%, %s%%], retrying...' % (area_percent, min_areap, max_areap)
+            ret = []
+        elif area_percent > min_areap:
+            print '%s%% is good for [%s%%, %s%%]' % (area_percent, min_areap, max_areap)
+            vr = variance([item.R for item in ret])
+            break
+    #    if min_areap <=  area_percent <= max_areap:
+    #        print 'area %s %% ok' % area_percent
+    #        vr = variance([item.R for item in ret])
+    #        if min_variance <= vr <= max_variance:
+    #            print 'variance %s ok.' % vr
+    #            break
+    #        else:
+    #            if vr > max_variance:
+    #                print 'variance %s is bigger then %s rtop=%s, retry.' % (vr, max_variance, rtop)
+    #                rtop /= 2
+    #                rbottom = min(rbottom*2, rtop)
+    #            elif vr < min_variance:
+    #                rtop *= 2
+    #                rbottom /= 2
+    #                print 'variance %s is smaller then %s rtop=%s, retry.' % (vr, min_variance, rtop)
+    #    else:
+    #        print 'area %s%% does not reach [%s%%, %s%%]' % (area_percent, min_areap, max_areap)
+    #        if area_percent < min_areap:
+    #            rtop *= 2
+    #            rbottom *= 2
+    #        elif area_percent > max_areap:
+    #            rtop /= 2
+    #            rbottom /= 2
     return ret, area_percent, vr
 
 def variance(arr):
