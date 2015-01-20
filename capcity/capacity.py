@@ -148,6 +148,12 @@ if '__main__' == __name__:
                         dis = max(pi.dis(pj), 0)
                         ways[i+1][j+1] = dis
                         ways[j+1][i+1] = dis
+            
+            p0 = Point(sector[top[0][0]-1])
+            p1 = Point(sector[top[1][1]-1])
+            p2 = Point(sector[bottom[0][0]-1])
+            p3 = Point(sector[bottom[1][1]-1])
+            ways[0][N] = min(p0.dis(p2), p1.dis(p3))
             #printways(ways)
             floyed(ways)
             #printways(ways)
@@ -155,7 +161,7 @@ if '__main__' == __name__:
             cpsum += ways[0][N]
             print '[%s%%, %s%%] index : %s capacitysum : %s' % (peri[0], peri[1], round, cpsum)
         capacity = cpsum*1./retrytimes
-        msg = 'capacity : %s, coverage : [%s%%, %s%%]' % (capacity, peri[0], peri[i])
+        msg = 'capacity : %s, coverage : [%s%%, %s%%]' % (capacity, peri[0], peri[1])
         msgout = '%s %s' % (capacity, peri[0])
         print msg
         writeout(msgout)
