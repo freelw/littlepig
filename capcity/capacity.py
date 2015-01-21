@@ -119,8 +119,8 @@ if '__main__' == __name__:
     topE = buildE(top, sector)
     bottomE = buildE(bottom, sector)
 
-#    per_range = [(item*10, item*10+1) for item in xrange(1,10)]
-    per_range = [(0, 100)]
+#    per_range = [(item*10, item*10+1) for item in xrange(1,10)] #小猪小猪，这句是老的
+    per_range = [(0, 100)] #小猪小猪，这句是新的
     
     def writeout(msg):
         fout = open('capacity3ddata.txt', 'a')
