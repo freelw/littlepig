@@ -119,11 +119,18 @@ if '__main__' == __name__:
     topE = buildE(top, sector)
     bottomE = buildE(bottom, sector)
 
-    per_range = [(item*10, item*10+1) for item in xrange(1,10)]
+#    per_range = [(item*10, item*10+1) for item in xrange(1,10)]
+    per_range = [(0, 100)]
     
     def writeout(msg):
         fout = open('capacity3ddata.txt', 'a')
         fout.write(msg+'\n')
+        fout.close()
+
+    def writeEveryTime(capacity, coverage):
+        msg = "%s %s\n" % (capacity, coverage)
+        fout = open('cceve.txt', 'a')
+        fout.write(msg)
         fout.close()
         
     retrytimes = config.pointsnum
@@ -160,6 +167,7 @@ if '__main__' == __name__:
             printclouds(clds)
             cpsum += ways[0][N]
             print '[%s%%, %s%%] index : %s capacitysum : %s' % (peri[0], peri[1], round, cpsum)
+            writeEveryTime(ways[0][N], area_percent)
         capacity = cpsum*1./retrytimes
         msg = 'capacity : %s, coverage : [%s%%, %s%%]' % (capacity, peri[0], peri[1])
         msgout = '%s %s' % (capacity, peri[0])
